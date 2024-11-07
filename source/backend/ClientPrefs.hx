@@ -22,6 +22,12 @@ import states.TitleState;
 	public var shaders:Bool = true;
 	public var cacheOnGPU:Bool = #if !switch false #else true #end; //From Stilic
 	public var framerate:Int = 60;
+
+	//optimizations
+	public static var enableGC:Bool = true;
+
+	//end of optimizations
+
 	public var camZooms:Bool = true;
 	public var hideHud:Bool = false;
 	public var noteOffset:Int = 0;
@@ -35,6 +41,19 @@ import states.TitleState;
 		[0xFF3DCAFF, 0xFFF4FFFF, 0xFF003060],
 		[0xFF71E300, 0xFFF6FFE6, 0xFF003100],
 		[0xFFFF884E, 0xFFFFFAF5, 0xFF6C0000]];
+
+	// Game Renderer
+	public static var ffmpegMode:Bool = false;
+	public static var ffmpegInfo:String = 'None';
+	public static var targetFPS:Float = 60;
+	public static var unlockFPS:Bool = false;
+	public static var renderBitrate:Float = 5.0;
+	public static var vidEncoder:String = 'libx264';
+	public static var oldFFmpegMode:Bool = false;
+	public static var lossless:Bool = false;
+	public static var quality:Int = 50;
+	public static var renderGCRate:Float = 5.0;
+	public static var showRemainingTime:Bool = false;
 
 	public var ghostTapping:Bool = true;
 	public var timeBarType:String = 'Time Left';

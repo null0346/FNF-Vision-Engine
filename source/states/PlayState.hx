@@ -34,6 +34,18 @@ import flixel.addons.display.FlxRuntimeShader;
 import openfl.filters.ShaderFilter;
 #end
 
+#if VIDEOS_ALLOWED
+#if (hxCodec >= "3.0.0" || hxCodec == "git")
+import hxcodec.flixel.FlxVideo as MP4Handler;
+#elseif (hxCodec == "2.6.1")
+import hxcodec.VideoHandler as MP4Handler;
+#elseif (hxCodec == "2.6.0")
+import VideoHandler as MP4Handler;
+#else
+import vlc.MP4Handler;
+#end
+#end
+
 import objects.VideoSprite;
 
 import objects.Note.EventNote;
@@ -243,10 +255,22 @@ class PlayState extends MusicBeatState
 	private var keysArray:Array<String>;
 	public var songName:String;
 
+	// FFMpeg values :)
+	var ffmpegMode = ClientPrefs.ffmpegMode;
+	var ffmpegInfo = ClientPrefs.ffmpegInfo;
+	var targetFPS = ClientPrefs.targetFPS;
+	var unlockFPS = ClientPrefs.unlockFPS;
+	var renderGCRate = ClientPrefs.renderGCRate;
+
 	// Callbacks for stages
 	public var startCallback:Void->Void = null;
 	public var endCallback:Void->Void = null;
 
+/*
+	inline cpp.vm.Gc.enable(ClientPrefs.enableGC || ffmpegMode && !ClientPrefs.noRenderGC); //lagspike prevention
+	inline Paths.clearStoredMemory();
+*/
+// ^ this gives 1 error :WalterSadge:
 	public static var nextReloadAll:Bool = false;
 	override public function create()
 	{
